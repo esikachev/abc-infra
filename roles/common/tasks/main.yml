@@ -1,0 +1,23 @@
+---
+- name: Installing of basic packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - git
+    - python-dev
+    - vim
+
+- name: Adding of public admins keys
+  authorized_key:
+    user: "{{ username }}"
+    state: present
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLY+5Yc3MMOmxVGrBmvfMX9bwK98RdgW+9E/rj56rh1w5cuIy5qN0xsuU4634EcSLRUjGXBcutDXPEXV1s7BZfeZjXJri37RICLsKfvPZcyiEqtwTbGYkcDDOHH0nmZdfngi0r/qAc5o5k3KA7Eh4CJW+GgqPoShngCKo9YKqbWFUkrGpX7wIUMlqwyuVKsybxD6EU+CB3RAeASG4E0rRq7VYQaTj/+PQq8VrWGUs9QHW8wX+OakDDCI7Or4Ll5q/uPCopaU9r7yz+uEYA1L8P2wEJ4XG9V6dxUMvzrFLBE+wDrHHXcEZMWGbmrPHUy5Yt8UCFPgtYfOl2BvHHHUSp mivanov@mivanov-X550MJ"
+
+- name: Generate SSH keys
+  user:
+    name: "{{ username }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
